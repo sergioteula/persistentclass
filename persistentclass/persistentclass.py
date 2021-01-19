@@ -41,19 +41,24 @@ class Persistent:
                 self.__dict__.update(data.__dict__)
             return True
         else:
-            with open(self.file_name, 'xb'):
+            with open(self.path, 'xb'):
                 pass
             return False
 
     def save(self):
-        #IMPROVE Try to first dumps into memory and then into file to avoid corrupted data
         """Saves the data."""
-        with open(self.path, 'wb') as f:
+        try:
             if self.use_dill:
                 import dill
-                dill.dump(self, f)
+                data = dill.dumps(self)
             else:
-                pickle.dump(self, f)
+                data = pickle.dumps(self)
+
+            with open(self.path, 'wb') as f:
+                f.write(data)
+
+        except Exception as e:
+            raise PersistentError('Error saving data for ' + self.filename + ': ' + str(e))
 
     def asave(self):
         """Saves the data if autosave is True."""
