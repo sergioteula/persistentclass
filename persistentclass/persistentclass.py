@@ -3,6 +3,11 @@ import pickle
 import os
 
 
+#TODO Add documentation
+#TODO Add exception handling
+#TODO Try adding autosave to any method
+
+
 class Persistent:
     """This class makes data permanent using object storage with pickle"""
     def __init__(self, data_id='', folder='', autosave=True, use_dill=False):
@@ -43,6 +48,7 @@ class Persistent:
             return False
 
     def save(self):
+        #IMPROVE Try to first dumps into memory and then into file to avoid corrupted data
         """Saves the data."""
         with open(self.path, 'wb') as f:
             if self.use_dill:
