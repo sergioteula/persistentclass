@@ -3,6 +3,9 @@ import datetime
 
 
 class MyClass(Persistent):
+    def __init__(self):
+        Persistent.__init__(self, folder='data/saves', use_dill=True)
+
     def init(self):
         value = 'Test'
 
@@ -14,7 +17,7 @@ def simpleGeneratorFun():
 
 
 myclass = MyClass()
-myclass.time = simpleGeneratorFun()
+#myclass.time = simpleGeneratorFun()
 myclass.save()
 
 otherclass = MyClass()

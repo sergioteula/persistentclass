@@ -11,13 +11,25 @@ import os
 class Persistent:
     """This class makes data permanent using object storage with pickle"""
     def __init__(self, data_id='', folder='', autosave=True, use_dill=False):
+        #TODO Add parameters validation
         self.data_id = data_id
         self.autosave = autosave
         self.use_dill = use_dill
 
-        # Create forlders structure
+        # Create forlder structure
         if folder and not os.path.exists(folder):
-            os.makedirs(folder)
+            try:
+                os.makedirs(folder)
+            except Exception as e:
+                raise PersistentError('Folder structure ' + folder + ' not created for ' + self.filename + ': ' + str(e))
+
+        # Fix folder path
+        if folder:
+            if folder[-1] != '/' and folder[-1] != '\\':
+                if '\\' in folder:
+                    folder += '\\'
+                else:
+                    folder += '/'
         self.folder = folder
 
         # Create file name
