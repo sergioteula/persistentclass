@@ -59,3 +59,7 @@ class Persistent:
     def init(self):
         """Initializes the object. Replace this on your class with custom method."""
         pass
+
+
+class PersistentError(BaseException):
+    pass
