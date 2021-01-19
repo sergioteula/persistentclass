@@ -15,13 +15,14 @@ class Persistent:
         self.data_id = data_id
         self.autosave = autosave
         self.use_dill = use_dill
+        self.filename = self.__class__.__name__ + str(self.data_id) + '.pickle'
 
         # Create forlder structure
         if folder and not os.path.exists(folder):
             try:
                 os.makedirs(folder)
             except Exception as e:
-                raise PersistentError('Folder structure ' + folder + ' not created for ' + self.filename + ': ' + str(e))
+                raise PersistentError('Folder structure "' + folder + '" not created for ' + self.filename + ': ' + str(e))
 
         # Fix folder path
         if folder:
@@ -31,9 +32,6 @@ class Persistent:
                 else:
                     folder += '/'
         self.folder = folder
-
-        # Create file name
-        self.filename = self.__class__.__name__ + str(self.data_id) + '.pickle'
         self.path = self.folder + self.filename
 
         # Initialize data if not loaded
