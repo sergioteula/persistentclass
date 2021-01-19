@@ -16,9 +16,7 @@ class Persistent:
         self.use_dill = use_dill
 
         # Create forlders structure
-        if folder is None:
-            folder = ''
-        elif not os.path.exists(folder):
+        if folder and not os.path.exists(folder):
             os.makedirs(folder)
         self.folder = folder
 
